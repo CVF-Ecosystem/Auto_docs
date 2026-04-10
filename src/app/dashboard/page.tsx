@@ -8,6 +8,9 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { LogoutButton } from '@/components/auth/LogoutButton'
 
+import { FileText, CalendarDays, LayoutTemplate, PlusCircle } from 'lucide-react'
+
+// ... skipped down to DashboardContent function...
 async function DashboardContent() {
   const session = await getServerSession(authOptions)
   
@@ -47,41 +50,45 @@ async function DashboardContent() {
     ])
     
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto p-6">
+      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50/80 via-white to-cyan-50/50">
+        <div className="container mx-auto p-4 sm:p-8 max-w-7xl">
           {/* Header */}
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
             <div>
-              <h1 className="text-2xl font-bold">Dashboard</h1>
-              <p className="text-gray-600">Xin chào, {session.user.name}</p>
+              <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
+                Dashboard
+              </h1>
+              <p className="text-slate-500 mt-1">Xin chào, <span className="font-semibold text-slate-700">{session.user.name}</span>! Chúc một ngày làm việc hiệu quả.</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4 w-full sm:w-auto">
               <Link 
-                href="/create"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                href="/dashboard/create"
+                className="flex items-center justify-center flex-1 sm:flex-none gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:-translate-y-0.5 font-medium"
               >
+                <PlusCircle size={20} />
                 Tạo tài liệu mới
               </Link>
+              <div className="hidden sm:block h-8 w-px bg-slate-200"></div>
               <LogoutButton />
             </div>
           </div>
           
           {/* Statistics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <StatsCard 
               label="Tổng số tài liệu"
               value={totalDocs}
-              icon="📄"
+              icon={<FileText size={32} strokeWidth={1.5} />}
             />
             <StatsCard 
               label="Tài liệu hôm nay"
               value={todayDocs}
-              icon="📅"
+              icon={<CalendarDays size={32} strokeWidth={1.5} />}
             />
             <StatsCard 
               label="Templates khả dụng"
               value={totalTemplates}
-              icon="📋"
+              icon={<LayoutTemplate size={32} strokeWidth={1.5} />}
             />
           </div>
           

@@ -60,9 +60,9 @@ test.describe('Auto Docs E2E Workflow', () => {
          throw new Error('LOGIN FAILED: Invalid credentials');
        }
 
-       await expect(page.locator('text=Xin chào, admin').first()).toBeVisible();
+       await expect(page.locator('text=Tạo tài liệu mới').first()).toBeVisible();
        await page.click('text=Tạo tài liệu mới');
-       await expect(page).toHaveURL(/.*\/create/);
+       await expect(page).toHaveURL(/.*\/dashboard\/create/);
     }
   });
 
