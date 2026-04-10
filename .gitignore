@@ -39,3 +39,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# E2E Playwright
+playwright-report/
+test-results/
+blob-report/
+
+# Scratch & Temporary
+*.pdf
+pdf-analysis*
+test-*.js
+*.sql
+update-*.js
+analyze-*.js
+import-templates.*
+generate-hash.js
+extract-pdf.js

@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id         String     @id @default(cuid())
+  name       String
+  username   String     @unique
+  password   String     // hashed with bcrypt
+  department String?
+  role       String     @default("user")
+  ocrMode    String     @default("gemini")  // "gemini" | "tesseract"
+  documents  Document[]
+  createdAt  DateTime   @default(now())
+}
+
+model Template {
+  id            String          @id @default(cuid())
+  name          String
+  description   String?
+  gasTemplateId String          // Google Docs template ID
+  schema        Json            // JSON schema của các fields
+  status        String          @default("active")
+  fields        TemplateField[]
+  documents     Document[]
+  createdAt     DateTime        @default(now())
+}
+
+model TemplateField {
+  id          String   @id @default(cuid())
+  templateId  String
+  template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  fieldName   String
+  fieldLabel  String
+  fieldType   String   // "text" | "date" | "number" | "select"
+  required    Boolean  @default(false)
+  order       Int
+  options     Json?    // for select fields
+
+  @@unique([templateId, fieldName])
+}
+
+model Document {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  templateId   String
+  template     Template @relation(fields: [templateId], references: [id])
+  inputType    String   // "text" | "file"
+  inputText    String?
+  inputFile    String?  // path to uploaded file
+  parsedJson   Json?    // AI parse result
+  docLink      String?  // Google Docs link
+  status       String   @default("draft") // "draft"|"confirmed"|"generated"|"error"
+  ocrEngine    String?  // which OCR was used
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@index([templateId])
+  @@index([status])
+  @@index([createdAt])
+}
