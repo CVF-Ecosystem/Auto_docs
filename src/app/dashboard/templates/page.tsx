@@ -70,14 +70,23 @@ export default async function TemplatesPage() {
                 
                 {/* Action Buttons to see actual content */}
                 <div className="grid grid-cols-2 gap-3 mt-4">
-                  <a 
-                    href={`https://docs.google.com/document/d/${template.gasTemplateId}/preview`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex justify-center items-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition-colors"
-                  >
-                    Xem File Gốc
-                  </a>
+                  {template.gasTemplateId.includes('mock') ? (
+                    <span 
+                      title="Cảnh báo: ID giả lập. Bạn cần kết nối với Google Docs thật"
+                      className="flex justify-center items-center py-2 bg-slate-100/50 text-slate-400 text-sm font-medium rounded-xl border border-slate-200 cursor-not-allowed"
+                    >
+                      Dữ liệu Mock
+                    </span>
+                  ) : (
+                    <a 
+                      href={`https://docs.google.com/document/d/${template.gasTemplateId}/preview`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex justify-center items-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition-colors"
+                    >
+                      Xem File Gốc
+                    </a>
+                  )}
                   <a 
                     href="/dashboard/create" 
                     className="flex justify-center items-center py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium rounded-xl transition-colors"
