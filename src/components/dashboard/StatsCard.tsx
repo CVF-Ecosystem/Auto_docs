@@ -1,13 +1,15 @@
 import { ReactNode } from 'react'
+import Link from 'next/link'
 
 interface StatsCardProps {
   label: string
   value: number
   icon: ReactNode
+  href?: string
 }
 
-export function StatsCard({ label, value, icon }: StatsCardProps) {
-  return (
+export function StatsCard({ label, value, icon, href }: StatsCardProps) {
+  const content = (
     <div className="group relative overflow-hidden bg-white/60 backdrop-blur-xl rounded-2xl p-6 border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
       {/* Decorative gradient blob */}
       <div className="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
@@ -25,4 +27,10 @@ export function StatsCard({ label, value, icon }: StatsCardProps) {
       </div>
     </div>
   )
+
+  if (href) {
+    return <Link href={href}>{content}</Link>
+  }
+
+  return content
 }

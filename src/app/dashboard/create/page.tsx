@@ -6,6 +6,7 @@ import { DynamicForm, TemplateField } from '@/components/form/DynamicForm'
 import { FileText, ArrowRight, CheckCircle2, ChevronLeft, Bot, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 export default function CreateDocumentPage() {
   const router = useRouter()
@@ -28,7 +29,9 @@ export default function CreateDocumentPage() {
     fetch('/api/templates')
       .then(res => res.json())
       .then(data => {
-        if (data.templates) setTemplates(data.templates)
+        if (Array.isArray(data)) {
+           setTemplates(data)
+        }
       })
       .catch(err => console.error("Could not load templates:", err))
   }, [])
@@ -58,13 +61,10 @@ export default function CreateDocumentPage() {
       
       setAiParsedData(data.fields)
       
-      // We also need the field definitions to render DynamicForm. 
-      // The parse API doesn't return definitions, just key-value matches. 
-      // Need to fetch template fields:
-      const tRes = await fetch(`/api/templates/${selectedTemplateId}`)
-      const tData = await tRes.json()
-      if (tRes.ok && tData.template && tData.template.fields) {
-         setTemplateFields(tData.template.fields)
+      // We already have the template and its fields in the `templates` state!
+      const selectedTpl = (templates as any[]).find(t => t.id === selectedTemplateId)
+      if (selectedTpl && selectedTpl.fields) {
+         setTemplateFields(selectedTpl.fields)
       }
       
       setStep(3)

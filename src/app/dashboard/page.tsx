@@ -79,16 +79,19 @@ async function DashboardContent() {
               label="Tổng số tài liệu"
               value={totalDocs}
               icon={<FileText size={32} strokeWidth={1.5} />}
+              href="/dashboard/documents"
             />
             <StatsCard 
               label="Tài liệu hôm nay"
               value={todayDocs}
               icon={<CalendarDays size={32} strokeWidth={1.5} />}
+              href="/dashboard/documents"
             />
             <StatsCard 
               label="Templates khả dụng"
               value={totalTemplates}
               icon={<LayoutTemplate size={32} strokeWidth={1.5} />}
+              href="/dashboard/templates"
             />
           </div>
           
