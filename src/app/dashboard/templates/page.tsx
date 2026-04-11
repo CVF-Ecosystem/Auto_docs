@@ -67,6 +67,24 @@ export default async function TemplatesPage() {
                 <div className="flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-100">
                   <span className="flex items-center gap-1.5"><Clock size={14} /> Cập nhật {formatDistanceToNow(new Date(template.createdAt), { addSuffix: true, locale: vi })}</span>
                 </div>
+                
+                {/* Action Buttons to see actual content */}
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <a 
+                    href={`https://docs.google.com/document/d/${template.gasTemplateId}/preview`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex justify-center items-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition-colors"
+                  >
+                    Xem File Gốc
+                  </a>
+                  <a 
+                    href="/dashboard/create" 
+                    className="flex justify-center items-center py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium rounded-xl transition-colors"
+                  >
+                    Dùng Mẫu Này
+                  </a>
+                </div>
               </div>
             ))}
           </div>
